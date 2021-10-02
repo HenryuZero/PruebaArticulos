@@ -12,6 +12,8 @@ public class PruebaArticulos {
     static int contador=0;
     static ArticuloDTO Productos;
     static ArrayList<ArticuloDTO> Articulos = new ArrayList<>();
+    public static final String REGEX_LETRAS="[a-zA-Z\\s]*";
+
     public static void main(String[] args) {
         Inicio();
     }
@@ -22,7 +24,7 @@ public class PruebaArticulos {
         System.out.println("Bienvenido. Elija la opción que desee realizar");
         System.out.println("1.- Introducir Producto");
         System.out.println("2.- Imprimir lista de productos");
-        System.out.println("3.- Comprar");
+        System.out.println("3.- Ver Precio");
         System.out.println("4.- Salir");
         eleccion = in.nextInt();
         switch(eleccion){
@@ -44,8 +46,6 @@ public class PruebaArticulos {
 
     private static void ImprimirProductos() {
         if (Articulos.size() != 0){
-        //myArr.length()! = 0
-        //if (Articulos.isEmpty()){
          printProductos(Articulos);
         } else{
             System.out.println("No existe lista de productos");
@@ -119,46 +119,56 @@ public class PruebaArticulos {
         do{
             System.out.print("Tipo de Producto (Comida, Electrodomestico, Limpieza, etc): ");
             Productos.setTipo(in.nextLine());
-        }while (!Productos.getTipo().matches("[a-zA-Z\\s]*"));
+        }while (!Productos.getTipo().matches(REGEX_LETRAS));
     }
 
     private static void Marca() {
         do{
             System.out.print("Marca del Producto: ");
             Productos.setBrand(in.nextLine());
-        }while (!Productos.getBrand().matches("[a-zA-Z\\s]*"));
+        }while (!Productos.getBrand().matches(REGEX_LETRAS));
     }
 
     private static void Nombre() {
         do{
             System.out.print("Nombre del Producto: ");
             Productos.setName(in.nextLine());
-        }while (!Productos.getName().matches("[a-zA-Z\\s]*"));
+        }while (!Productos.getName().matches(REGEX_LETRAS));
     }
 
     private static void Comprar(){
      String Pedido,Cosa;
      int id=-1;
      ArticuloDTO muestra;
-     System.out.println("¿Que articulo quiere comprar?");
-     Pedido= in.nextLine();
-     in.nextLine();
+        if (Articulos.size() != 0){
+            System.out.println("¿Que articulo quiere comprar?");
+            Pedido= in.nextLine();
+            in.nextLine();
 
-     for (int i=0;i< Articulos.size();i++){
-         //muestra=Articulos.get(i);
-         Cosa=Articulos.get(i).getName();
-         //System.out.println("-"+Articulos.get(i).getName());
-         System.out.println(Pedido.equals(Articulos.get(i).getName()));
-        if (Pedido.compareTo(Cosa)==0){
+            for (int i=0;i< Articulos.size();i++){
+                //muestra=Articulos.get(i);
+                Cosa=Articulos.get(i).getName();
+                System.out.println("-"+Articulos.get(i).getName());
 
-          System.out.println(" "+Cosa);
-          id=i;
+                System.out.println(Pedido.equalsIgnoreCase(Articulos.get(i).getName()));
+                if (Pedido.compareTo(Cosa)==0){
+
+                    System.out.println(" "+Cosa);
+                    id=i;
+                }
+            }
+            if (id==-1){
+                System.out.println("Producto no existe");
+            }else{
+                muestra=Articulos.get(id);
+                System.out.println("El costo es de: "+ muestra.getPrecio() );}
+        } else{
+            System.out.println("No existe lista de productos");
+            return;
         }
-     }
-     if (id==-1){
-         System.out.println("Producto no existe");
-     }else{
-         muestra=Articulos.get(id);
-        System.out.println("El costo es de: "+ muestra.getPrecio() );}
+
     }
+
+
+
 }

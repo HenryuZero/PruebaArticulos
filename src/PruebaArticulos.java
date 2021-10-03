@@ -13,12 +13,15 @@ public class PruebaArticulos {
     static ArticuloDTO Productos;
     static ArrayList<ArticuloDTO> Articulos = new ArrayList<>();
     public static final String REGEX_LETRAS="[a-zA-Z\\s]*";
-    public static final String OPCION_1="1.- Imprimir Producto",
+    public static final String OPCION_1="1.- Introducir Producto",
                                OPCION_2="2.- Imprimir lista de productos",
                                OPCION_3="3.- Ver Precio",
-                               OPCION_4="4.- Salir",
+                               OPCION_4="4.- Ver Existencia",
+                               OPCION_5="5.- Salir",
+                               MENSAJE_REVISAR_ARTICULO="¿Qué artículo desea revisar?",
                                MENSAJE_ERROR="Error, favor de introducir valores validos",
-                               MENSAJE_INSERCION="Numero de Productos a Introducir: ";
+                               MENSAJE_INSERCION="Numero de Productos a Introducir: ",
+                               MENSAJE_LISTA_VACIA="No existe lista de productos";
 
     public static void main(String[] args) {
         Inicio();
@@ -32,12 +35,14 @@ public class PruebaArticulos {
         System.out.println(OPCION_2);
         System.out.println(OPCION_3);
         System.out.println(OPCION_4);
+        System.out.println(OPCION_5);
         eleccion = in.nextInt();
         switch(eleccion){
             case 1: InsercionProductos(); break;
             case 2: ImprimirProductos();break;
             case 3: Comprar();break;
-            case 4: System.exit(0);
+            case 4: Existencia(); break;
+            case 5: System.exit(0);
             default:
                 System.out.println("Favor de introducir un numero valido"); Inicio();break;
         }
@@ -54,7 +59,7 @@ public class PruebaArticulos {
         if (Articulos.size() != 0){
          printProductos(Articulos);
         } else{
-            System.out.println("No existe lista de productos");
+            System.out.println(MENSAJE_LISTA_VACIA);
             return;
         }
     }
@@ -147,19 +152,18 @@ public class PruebaArticulos {
      int id=-1;
      ArticuloDTO muestra;
         if (Articulos.size() != 0){
-            System.out.println("¿Que articulo quieres revisar?");
-            Pedido= in.nextLine();
+            System.out.println(MENSAJE_REVISAR_ARTICULO);
             in.nextLine();
+            Pedido= in.nextLine();
 
             for (int i=0;i< Articulos.size();i++){
                 //muestra=Articulos.get(i);
                 Cosa=Articulos.get(i).getName();
-                System.out.println("-"+Articulos.get(i).getName());
-
-                System.out.println(Pedido.equalsIgnoreCase(Articulos.get(i).getName()));
+                //System.out.println(Pedido);
+                //System.out.println("-"+ Articulos.get(i).toString());
+                //System.out.println(Pedido.equalsIgnoreCase(Articulos.get(i).getName()));
                 if (Pedido.compareTo(Cosa)==0){
-
-                    System.out.println(" "+Cosa);
+ //                   System.out.println(" "+Cosa);
                     id=i;
                 }
             }
@@ -169,10 +173,39 @@ public class PruebaArticulos {
                 muestra=Articulos.get(id);
                 System.out.println("El costo es de: "+ muestra.getPrecio() );}
         } else{
-            System.out.println("No existe lista de productos");
+            System.out.println(MENSAJE_LISTA_VACIA);
             return;
         }
 
+    }
+    private static void Existencia() {
+        String Pedido,Cosa;
+        int id=-1;
+        ArticuloDTO muestra;
+        if (Articulos.size() != 0){
+            System.out.println(MENSAJE_REVISAR_ARTICULO);
+            in.nextLine();
+            Pedido= in.nextLine();
+            for (int i=0;i< Articulos.size();i++){
+                Cosa=Articulos.get(i).getName();
+                if (Pedido.compareTo(Cosa)==0){
+                    id=i;
+                }
+            }
+            if (id==-1){
+                System.out.println("Producto no existe");
+            }else{
+                muestra=Articulos.get(id);
+                if (muestra.isDisponible()==true){
+                 System.out.println("Hay: "+ muestra.getCantidad() + " disponibles" );}
+                else{
+                    System.out.println("No hay articulos disponibles");
+                }
+            }
+        } else{
+            System.out.println(MENSAJE_LISTA_VACIA);
+            return;
+        }
     }
 
 

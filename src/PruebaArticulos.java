@@ -147,7 +147,7 @@ public class PruebaArticulos {
      int id=-1;
      ArticuloDTO muestra;
         if (Articulos.size() != 0){
-            System.out.println("¿Que articulo quiere comprar?");
+            System.out.println("¿Que articulo quieres revisar?");
             Pedido= in.nextLine();
             in.nextLine();
 

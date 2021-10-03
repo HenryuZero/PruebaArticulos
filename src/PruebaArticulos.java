@@ -13,6 +13,12 @@ public class PruebaArticulos {
     static ArticuloDTO Productos;
     static ArrayList<ArticuloDTO> Articulos = new ArrayList<>();
     public static final String REGEX_LETRAS="[a-zA-Z\\s]*";
+    public static final String OPCION_1="1.- Imprimir Producto",
+                               OPCION_2="2.- Imprimir lista de productos",
+                               OPCION_3="3.- Ver Precio",
+                               OPCION_4="4.- Salir",
+                               MENSAJE_ERROR="Error, favor de introducir valores validos",
+                               MENSAJE_INSERCION="Numero de Productos a Introducir: ";
 
     public static void main(String[] args) {
         Inicio();
@@ -22,10 +28,10 @@ public class PruebaArticulos {
         int eleccion=0;
         try{
         System.out.println("Bienvenido. Elija la opción que desee realizar");
-        System.out.println("1.- Introducir Producto");
-        System.out.println("2.- Imprimir lista de productos");
-        System.out.println("3.- Ver Precio");
-        System.out.println("4.- Salir");
+        System.out.println(OPCION_1);
+        System.out.println(OPCION_2);
+        System.out.println(OPCION_3);
+        System.out.println(OPCION_4);
         eleccion = in.nextInt();
         switch(eleccion){
             case 1: InsercionProductos(); break;
@@ -36,7 +42,7 @@ public class PruebaArticulos {
                 System.out.println("Favor de introducir un numero valido"); Inicio();break;
         }
         }catch(Exception e){
-            System.out.println("Error, solo introduzca numeros validos");
+            System.out.println(MENSAJE_ERROR);
             in.nextLine();
         }
         if (eleccion>=0){
@@ -63,7 +69,7 @@ public class PruebaArticulos {
 
     private static void InsercionProductos() {
         try{
-        System.out.println("Numero de Productos a Introducir: ");
+        System.out.println(MENSAJE_INSERCION);
         contador=in.nextInt();
         in.nextLine();
         for (int i=0;i<contador;i++){
@@ -77,7 +83,7 @@ public class PruebaArticulos {
             Articulos.add(Productos);
         }
         }catch(Exception e) {
-            System.out.println("Error. Introduzca un numero");
+            System.out.println(MENSAJE_ERROR);
             in.nextLine();
         }
         if (contador<=0){
@@ -97,7 +103,7 @@ public class PruebaArticulos {
             //in.nextLine();
 
         }catch(Exception e){
-            System.out.println("Favor de escribir numeros validos");
+            System.out.println(MENSAJE_ERROR);
         }
         if (Productos.getCantidad()<0){
         System.out.println("Favor de usar cantidades validas");
@@ -109,7 +115,7 @@ public class PruebaArticulos {
             System.out.print("Precio: ");
             Productos.setPrecio(in.nextDouble());
         }catch(InputMismatchException e){
-        System.out.println("Valor no valido"); in.nextLine();}
+        System.out.println(MENSAJE_ERROR); in.nextLine();}
         if (Productos.getPrecio()==null){
             System.out.println("Favor de usar numeros para el precio");
             Precio();}

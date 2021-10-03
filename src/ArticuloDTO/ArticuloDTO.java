@@ -5,7 +5,7 @@ public class ArticuloDTO {
     private String Brand;
     private String Tipo;
     private Double Precio;
-    private int Cantidad;
+    private int Cantidad=-1;
     private boolean Disponible;
 
     public int getCantidad() { return Cantidad;  }
